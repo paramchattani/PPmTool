@@ -1,50 +1,59 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types'
+import { createProject } from '../../redux/Project/ProjectAction';
 
 class AddProject extends Component {
     constructor(){
         super();
         this.state={
+            project:{
             projectName:"",
             projectIdentifier:"",
             description:"",
             start_date:"",
-            end_date:""
+            end_date:"",
+            }
         }
     }
 
      onNameChange=(e)=>{
 this.setState({
-    projectName:e.target.value
+    project:{...this.state.project,projectName:e.target.value}
 })
     }
 
     onIdChange=(e)=>{
         this.setState({
-            projectIdentifier:e.target.value
+            project:{...this.state.project,projectIdentifier:e.target.value}
         })
     }
     onDescriptionChange=(e)=>{
         this.setState({
-            description:e.target.value
+            project:{...this.state.project,description:e.target.value}
         })
     }
     onStartDateChange=(e)=>{
         this.setState({
-            start_date:e.target.value
+
+            project:{...this.state.project,start_date:e.target.value}
         })
     }
     onEndDateChange=(e)=>{
         this.setState({
-            end_date:e.target.value
+           project:{...this.state.project,end_date:e.target.value}
+
         })
     }
+    componentDidMount(){
+
+        
+    }
+
     onFormSubmit=(e)=>{
 
         e.preventDefault();
-        const newProject={
-            ...this.state
-        }
-        console.log(newProject)
+        this.props.createsProject(this.state.project,this.props.history)
     }
 
     render() {
@@ -92,4 +101,9 @@ this.setState({
     }
 }
 
-export default AddProject
+const mapDispatchToProps=(dispatch)=>{
+    return {
+        createsProject:(x,y)=>dispatch(createProject(x,y))
+    }
+}
+export default connect(null,mapDispatchToProps)(AddProject)
