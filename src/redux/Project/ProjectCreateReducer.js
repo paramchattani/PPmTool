@@ -1,9 +1,10 @@
 import { GET_ERRORS } from "./ProjectType";
 
-const initilaState={
-    error:[],
+const initialState={
+    error:{},
 }
-const ProjectCreateReducer=(state=initilaState,action)=>{
+
+const ProjectCreateReducer=(state=initialState,action)=>{
 
     switch(action.type)
     {

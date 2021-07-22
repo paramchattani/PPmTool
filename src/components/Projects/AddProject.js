@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { createProject } from '../../redux/Project/ProjectAction';
+import classnames from 'classnames'
 
 class AddProject extends Component {
     constructor(){
@@ -12,8 +13,8 @@ class AddProject extends Component {
             projectIdentifier:"",
             description:"",
             start_date:"",
-            end_date:"",
-            }
+            end_date:""
+            },
         }
     }
 
@@ -45,10 +46,7 @@ this.setState({
 
         })
     }
-    componentDidMount(){
 
-        
-    }
 
     onFormSubmit=(e)=>{
 
@@ -57,10 +55,16 @@ this.setState({
     }
 
     render() {
+        
+        const inputStyle={
+            border:"10 px solid #772F21"
+        }
+        const dummy={
 
+        }
         return (
             <div>
-        
+                
          <div className="register">
         <div className="container">
             <div className="row">
@@ -68,18 +72,18 @@ this.setState({
                     <h6 className="display-5 text-center"><b>Project form</b></h6>
                     <hr />
                     <form onSubmit={this.onFormSubmit}>
-                        <div className="form-group">
-                            <input onChange={this.onNameChange} value={this.state.projectName} type="text" className="form-control form-control-lg " placeholder="Project Name" name="projectName"/>
+                        {this.props.errors.error.projectName && <h5 style={{"color":"maroon"}}><b>{'*'+this.props.errors.error.projectName}</b></h5>}
+                        <div className={this.props.errors.error.projectName?"form-group has-danger":"form-group"}>
+                            <input className={this.props.errors.error.projectName?"form-control form-control-danger":"form-control"} onChange={this.onNameChange} value={this.state.projectName} type="text" className="form-control form-control-lg " placeholder="Project Name" name="projectName"/>
                         </div>
-                        {//console.log(this.state.projectName)
-                        }
-                        <div className="form-group">
-                            <input onChange={this.onIdChange} value={this.state.projectIdentifier} type="text" className="form-control form-control-lg" placeholder="Unique Project ID" name="projectIdentifier"
+                        {this.props.errors.error.projectIdentifier && <h5 style={{"color":"maroon"}}><b>{'*'+this.props.errors.error.projectIdentifier}</b></h5>}
+                        <div className={this.props.errors.error.projectIdentifier?"form-group has-danger":"form-group"}>
+                            <input  className={this.props.errors.error.peojectIdentifier?"form-control form-control-danger":"form-control"} onChange={this.onIdChange} value={this.state.projectIdentifier} type="text" className="form-control form-control-lg" placeholder="Unique Project ID" name="projectIdentifier"
                                  />
                         </div>
-                        
-                        <div className="form-group">
-                            <textarea onChange={this.onDescriptionChange} value={this.state.description} className="form-control form-control-lg" placeholder="Project Description" name="description"></textarea>
+                        {this.props.errors.error.description && <h5 style={{"color":"maroon"}}><b>{'*'+this.props.errors.error.description}</b></h5>}
+                        <div className={this.props.errors.error.description?"form-group has-danger":"form-group"}>
+                            <textarea onChange={this.onDescriptionChange} value={this.state.description} className={this.props.errors.error.description?"form-control form-control-danger":"form-control form-control-lg"} placeholder="Project Description" name="description"></textarea>
                         </div>
                         <h5>Start Date</h5>
                         <div className="form-group">
@@ -101,9 +105,15 @@ this.setState({
     }
 }
 
+const mapStateToProps=(state)=>{
+    return {
+        errors:state.createprojects
+    }
+}
+
 const mapDispatchToProps=(dispatch)=>{
     return {
         createsProject:(x,y)=>dispatch(createProject(x,y))
     }
 }
-export default connect(null,mapDispatchToProps)(AddProject)
+export default connect(mapStateToProps,mapDispatchToProps)(AddProject)

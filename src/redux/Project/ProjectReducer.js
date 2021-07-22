@@ -3,7 +3,7 @@ import { FETCH_PROJECT_FAILURE, FETCH_PROJECT_REQUEST, FETCH_PROJECT_SUCCESS } f
 const initialState={
     loading:true,
     projects:[],
-    errors:[]
+    errors:''
 }
 const ProjectReducer=(state=initialState,action)=>{
 switch(action.type)
@@ -13,14 +13,14 @@ switch(action.type)
             ...state,
             loading:true,
             projects:[],
-            errors:[]
+            errors:''
         }
         case  FETCH_PROJECT_SUCCESS:
             return {
                 ...state,
                 loading:false,
                 projects:action.payload,
-                errors:[]
+                errors:''
             }
             case  FETCH_PROJECT_FAILURE:
                 return {

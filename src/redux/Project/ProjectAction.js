@@ -32,8 +32,9 @@ export const createProjectRequest=(result)=>{
 export const fetchProjects=()=>{
     return (dispatch)=>{
         dispatch(fetchProjectRequest)
-        axios.get('')
+        axios.get('http://localhost:8080/api/project/projects')
         .then(res=>{
+            console.log(res.data)
             dispatch(fetchProjectSuccess(res.data))
         })
         .catch(err=>{
@@ -49,9 +50,13 @@ export const createProject=(project,history)=>{
         .then(res=>{
             alert('PROJECT CREATED')
             history.push('/dashboard')
+            
         })
         .catch(err=>{
-            dispatch(createProjectRequest(err.message))
+            //console.log(project)
+            console.log(err.response.data)
+            console.log(project)
+            dispatch(createProjectRequest(err.response.data))
         })
     }
 }
