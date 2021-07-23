@@ -1,5 +1,7 @@
 import axios from "axios"
 import { FETCH_PROJECT_FAILURE, FETCH_PROJECT_REQUEST, FETCH_PROJECT_SUCCESS, GET_ERRORS } from "./ProjectType"
+import {Redirect} from 'react-router';
+import { withRouter } from 'react-router-dom';
 
 export const  fetchProjectRequest=()=>{
     return {
@@ -28,6 +30,18 @@ export const createProjectRequest=(result)=>{
         payload:result
     }
 }
+export const fetchProjectForUpdateFailure=(error)=>{
+    return {
+        type:FETCH_PROJECT_FAILURE,
+        payload:error
+    }
+}
+export const fetchProjectForUpdateSuccess=(project)=>{
+    return {
+        type:FETCH_PROJECT_SUCCESS,
+        payload:project
+    }
+}
 
 export const fetchProjects=()=>{
     return (dispatch)=>{
@@ -43,20 +57,57 @@ export const fetchProjects=()=>{
     }
 }
 
+export const fetchProjectById=(id,history)=>{
+return (dispatch)=>{
+    axios.get(`http://localhost:8080/api/project/${id}`)
+    .then(res=>{
+        dispatch(fetchProjectForUpdateSuccess(res.data))
+    })
+    .catch(err=>{
+        //dispatch(fetchProjectForUpdateFailure(err.message))
+        alert('error ocuured  poosibly due to wrong projectIdentifier')
+        history.push('/dashboard')   
+    })
+
+}
+}
+
 export const createProject=(project,history)=>{
     return (dispatch)=>{
     
         axios.post('http://localhost:8080/api/project',project)
         .then(res=>{
             alert('PROJECT CREATED')
-            history.push('/dashboard')
+            console.log('ewfwefef')
+        history.push("/dashboard")
+          //  window.location.reload();
+          
             
         })
         .catch(err=>{
-            //console.log(project)
-            console.log(err.response.data)
             console.log(project)
-            dispatch(createProjectRequest(err.response.data))
+           console.log(err.response.data)
+            console.log(project)
+          dispatch(createProjectRequest(err.response.data))
+        })
+    }
+}
+export const updateProject=(project,history)=>{
+    return (dispatch)=>{
+    
+        axios.post('http://localhost:8080/api/project',project)
+        .then(res=>{
+            alert('PROJECT CREATED')
+            console.log('ewfwefef')
+          //  window.location.reload();
+          
+            
+        })
+        .catch(err=>{
+            console.log(project)
+           console.log(err.response.data)
+            console.log(project)
+         dispatch(createProjectRequest(err.response.data))
         })
     }
 }

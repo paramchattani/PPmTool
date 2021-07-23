@@ -56,12 +56,7 @@ this.setState({
 
     render() {
         
-        const inputStyle={
-            border:"10 px solid #772F21"
-        }
-        const dummy={
-
-        }
+       
         return (
             <div>
                 

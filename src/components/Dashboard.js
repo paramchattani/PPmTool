@@ -7,17 +7,21 @@ import { fetchProjects } from '../redux/Project/ProjectAction';
 
 class Dashboard extends Component {
 
+
     
     componentDidMount(){
+        console.log("eve")
+        
         this.props.fetchProject()
     }
-    componentWillReceiveProps(nextProps){
-        if(nextProps.projects)
-        console.log(nextProps.project)
-    }
+    
+
+
+ 
+    
 
     render() {
-        console.log(this.props.projects)
+    
         return (
             <div className="projects">
             <div className="container">
@@ -30,10 +34,10 @@ class Dashboard extends Component {
                        <CreateProjectButton/>
                         <br />
                         <hr />
-                    {this.props.projects.loading?<h2>LOADING...</h2>:
+                    {this.props.projects.loading?(<h2>LOADING...</h2>):
                     
-                    this.props.projects.errors?<h2>{this.props.projects.errors+"SITE CRASHED ,POSIIBLY DUE  TO WRONG API "}</h2>:
-                    this.props.projects.projects.map(project=><ProjectItem key={project.projectIdentifier} id={project.projectIdentifier} name={project.projectName} description={project.description}/>)
+                    this.props.projects.errors?(<h2>{this.props.projects.errors+"SITE CRASHED ,POSSIBLY DUE TO WRONG API "}</h2>):
+                    this.props.projects && this.props.projects.projects && this.props.projects.projects.map(project=><ProjectItem key={project.projectIdentifier} id={project.projectIdentifier} name={project.projectName} description={project.description}/>)
                     }
                     
     

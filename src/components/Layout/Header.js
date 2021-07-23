@@ -6,7 +6,7 @@ class Header extends Component {
             
             <nav className="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
         <div className="container">
-            <a  className="navbar-brand" href="dashboard" style={{fontSize:"15px"}}>
+            <a  className="navbar-brand" href="/dashboard" style={{fontSize:"15px"}}>
                 Personal Project Management Tool
             </a>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
@@ -16,9 +16,9 @@ class Header extends Component {
             <div className="collapse navbar-collapse" id="mobile-nav">
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item">
-                        <Link className="nav-link" to="/dashboard">
+                        <a className="nav-link" href="/dashboard">
                             Dashboard
-                        </Link>
+                        </a>
                     </li>
                 </ul>
 
