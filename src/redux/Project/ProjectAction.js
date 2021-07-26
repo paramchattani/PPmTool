@@ -1,5 +1,5 @@
 import axios from "axios"
-import { FETCH_PROJECT_FAILURE, FETCH_PROJECT_REQUEST, FETCH_PROJECT_SUCCESS, GET_ERRORS } from "./ProjectType"
+import { DELETE_PROJECT, FETCH_PROJECT_FAILURE, FETCH_PROJECT_REQUEST, FETCH_PROJECT_SUCCESS, GET_ERRORS } from "./ProjectType"
 import {Redirect} from 'react-router';
 import { withRouter } from 'react-router-dom';
 
@@ -42,6 +42,15 @@ export const fetchProjectForUpdateSuccess=(project)=>{
         payload:project
     }
 }
+
+export const deleteProject=(id)=>{
+    console.log("inside")
+    return {
+type:DELETE_PROJECT,
+payload:id
+    }
+}
+
 
 export const fetchProjects=()=>{
     return (dispatch)=>{
@@ -92,6 +101,8 @@ export const createProject=(project,history)=>{
         })
     }
 }
+
+
 export const updateProject=(project,history)=>{
     return (dispatch)=>{
     
@@ -109,5 +120,27 @@ export const updateProject=(project,history)=>{
             console.log(project)
          dispatch(createProjectRequest(err.response.data))
         })
+    }
+}
+
+export const deleteProjectById=(id)=>{
+console.log(id)
+    return (dispatch)=>{
+        axios.delete(`http://localhost:8080/api/project/${id}`)
+        .then(res=>{
+            console.log("deleted")
+            dispatch(deleteProject(id))
+            
+           // history.push('/dashboard')
+
+        }
+
+        )
+        .catch(err=>{
+            //alert('Error occured ')
+            //history.push('dashboard')
+        })
+
+
     }
 }

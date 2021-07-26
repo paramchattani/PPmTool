@@ -1,8 +1,15 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
-
+import { deleteProjectById } from '../../redux/Project/ProjectAction';
+import { connect } from 'react-redux';
 class ProjectItem extends Component {
+     deletes=()=>{
+         console.log(this.props.id)
+        this.props.deletesProject(this.props.id)
+    }
     render() {
+
+        
         return (
             <div className="container" >
                             <div className="card card-body bg-light mb-3 " style={{height:"150px",fontSize:"13px"}}>
@@ -27,11 +34,11 @@ class ProjectItem extends Component {
                                                 </li>
                                             </Link>
 
-                                            <a href="">
-                                                <li className="list-group-item delete">
+                                            
+                                                <li className="list-group-item delete" onClick={this.deletes}>
                                                     <i className="fa fa-minus-circle pr-1"> Delete Project</i>
                                                 </li>
-                                            </a>
+                                        
                                         </ul>
                                     </div>
                                 </div>
@@ -40,4 +47,11 @@ class ProjectItem extends Component {
         )
     }
 }
-export default  ProjectItem;
+
+
+const mapDispatchToProps=(dispatch)=>{
+    return {
+        deletesProject:(x)=>dispatch(deleteProjectById(x))
+    }
+}
+export default  connect(null,mapDispatchToProps)(ProjectItem);

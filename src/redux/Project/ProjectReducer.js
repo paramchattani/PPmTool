@@ -1,4 +1,4 @@
-import { FETCH_PROJECT_FAILURE, FETCH_PROJECT_REQUEST, FETCH_PROJECT_SUCCESS } from "./ProjectType"
+import { DELETE_PROJECT, FETCH_PROJECT_FAILURE, FETCH_PROJECT_REQUEST, FETCH_PROJECT_SUCCESS } from "./ProjectType"
 
 const initialState={
     loading:true,
@@ -29,6 +29,17 @@ switch(action.type)
                     projects:[],
                     errors:action.payload
                 }
+             case DELETE_PROJECT:
+                 console.log("reached")
+                 return {
+                     ...state,
+                     loading:false,
+                    
+
+                     projects:state.projects.filter(project=>project.projectIdentifier!==action.payload),
+                     errors:'',
+                 }
+
                 default : return state
 }
 
